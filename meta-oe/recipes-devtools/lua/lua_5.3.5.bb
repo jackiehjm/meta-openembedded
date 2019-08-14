@@ -24,7 +24,9 @@ TARGET_CC_ARCH += " -fPIC ${LDFLAGS}"
 EXTRA_OEMAKE = "'CC=${CC} -fPIC' 'MYCFLAGS=${CFLAGS} -DLUA_USE_LINUX -fPIC' MYLDFLAGS='${LDFLAGS}'"
 
 do_configure_prepend() {
-    sed -i -e s:/usr/local:${prefix}:g src/luaconf.h
+    sed -i -e s:/usr/local:${prefix}:g \
+           -e '/defined(LUA_COMPAT_5_1)/i #define LUA_COMPAT_5_1' \
+           src/luaconf.h
 }
 
 do_compile () {
